@@ -5,6 +5,8 @@ import { AppService } from './app.service';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { mikroOrmConfig } from 'mikro-orm.config';
 import { ChatModule } from './chat/chat.module';
+import { AuthModule } from './auth/auth.module';
+import { KickAuthModule } from './kick-auth/kick-auth.module';
 
 @Module({
   imports: [
@@ -19,6 +21,8 @@ import { ChatModule } from './chat/chat.module';
     }),
     MikroOrmModule.forRoot(mikroOrmConfig),
     ChatModule,
+    AuthModule,
+    KickAuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
