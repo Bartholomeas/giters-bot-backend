@@ -85,14 +85,7 @@ export class KickClient {
     };
   }
 
-  async getAccessToken(
-    code: string,
-    state: string,
-  ): Promise<{
-    accessToken: string;
-    refreshToken: string;
-    expiresIn: number;
-  }> {
+  async getAccessToken(code: string, state: string): Promise<TokenResponse> {
     if (!code) throw new BadRequestException('No code provided');
     if (!state) throw new BadRequestException('No state provided');
 
@@ -110,9 +103,7 @@ export class KickClient {
         code_verifier: codeVerifier,
       } as KickAuthSearchParams);
 
-      const {
-        data: { access_token, refresh_token, expires_in },
-      } = await axios.post<KickAuthTokenResponse>(
+      const { data } = await axios.post<TokenResponse>(
         this.kickTokenUrl,
         tokenParams.toString(),
         {
@@ -121,11 +112,7 @@ export class KickClient {
           },
         },
       );
-      return {
-        accessToken: access_token,
-        refreshToken: refresh_token,
-        expiresIn: expires_in,
-      };
+      return data;
     } catch (err) {
       if (err instanceof AxiosError) {
         throw new BadRequestException(err.response?.data);

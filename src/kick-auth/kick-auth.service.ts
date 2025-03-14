@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { HandleAuthDto } from './dto/handle-auth.dto';
-import { TokenHintType } from './types/kick-auth.types';
+import { TokenHintType, TokenResponse } from './types/kick-auth.types';
 import { AxiosError } from 'axios';
 import { KickClient } from './kick.client';
 
@@ -24,11 +24,10 @@ export class KickAuthService {
   async getAccessToken({ code, state }: HandleAuthDto): Promise<{
     accessToken: string;
     refreshToken: string;
-    expiresIn: number;
   }> {
-    const { accessToken, refreshToken, expiresIn } =
+    const { access_token, refresh_token } =
       await this.kickClient.getAccessToken(code, state);
-    return { accessToken, refreshToken, expiresIn };
+    return { accessToken: access_token, refreshToken: refresh_token };
   }
 
   async logout(token: string, tokenHintType?: TokenHintType): Promise<void> {
