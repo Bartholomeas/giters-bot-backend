@@ -62,6 +62,9 @@ importers:
       helmet:
         specifier: ^8.0.0
         version: 8.0.0
+      kick-auth:
+        specifier: ^1.0.5
+        version: 1.0.5
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
@@ -1725,6 +1728,10 @@ packages:
     resolution: {integrity: sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==}
     engines: {node: '>= 8'}
 
+  crypto@1.0.1:
+    resolution: {integrity: sha512-VxBKmeNcqQdiUQUW2Tzq0t377b54N2bMtXO/qiLa+6eRRmmC4qT3D4OnTGoT/U6O9aklQ/jTwbOtRMTTY8G0Ig==}
+    deprecated: This package is no longer supported. It's now a built-in Node module. If you've depended on crypto, you should switch to the one that's built-in.
+
   dataloader@2.2.3:
     resolution: {integrity: sha512-y2krtASINtPFS1rSDjacrFgn1dcUuoREVabwlOGOe4SdxenREqwjwjElAdwvbGM7kgZz9a3KVicWR7vcz8rnzA==}
 
@@ -2637,6 +2644,9 @@ packages:
 
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
+
+  kick-auth@1.0.5:
+    resolution: {integrity: sha512-TTuKw1r32IYUY248fXO8kCTvi1dRD8pX99SgR0aXM2qCdFa5dj/j+1b2DAuaY/T4ft4nmXZhkwxQ7dzKebfEuA==}
 
   kind-of@6.0.3:
     resolution: {integrity: sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==}
@@ -5680,6 +5690,8 @@ snapshots:
       shebang-command: 2.0.0
       which: 2.0.2
 
+  crypto@1.0.1: {}
+
   dataloader@2.2.3: {}
 
   debug@2.6.9:
@@ -6817,6 +6829,10 @@ snapshots:
     dependencies:
       json-buffer: 3.0.1
 
+  kick-auth@1.0.5:
+    dependencies:
+      crypto: 1.0.1
+
   kind-of@6.0.3: {}
 
   kleur@3.0.3: {}
@@ -7383,7 +7399,7 @@ snapshots:
 
   send@1.1.0:
     dependencies:
-      debug: 4.3.6
+      debug: 4.4.0
       destroy: 1.2.0
       encodeurl: 2.0.0
       escape-html: 1.0.3

@@ -10,6 +10,7 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
 
   app.use(helmet());
+
   app.useGlobalFilters(new HttpExceptionFilter());
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
   app.useGlobalPipes(

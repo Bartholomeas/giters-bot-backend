@@ -1,4 +1,6 @@
-export const KICK_SCOPES = [
+import { KickOAuthScopes } from './types/kick-auth.types';
+
+export const KICK_SCOPES: KickOAuthScopes[] = [
   'user:read',
   'channel:read',
   'chat:write',

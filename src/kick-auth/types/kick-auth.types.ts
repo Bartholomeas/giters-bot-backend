@@ -20,8 +20,36 @@ export interface KickAuthSearchParams extends Record<string, string> {
 
 export interface KickAuthTokenResponse {
   access_token: string;
+  expires_in: number;
   refresh_token: string;
+  scope: string;
+  token_type: string;
+  // expires_in: number;
+  // scope: string;
+  // token_type: 'Bearer';
+}
+
+export interface TokenResponse {
+  access_token: string;
+  token_type: string;
+  refresh_token: string;
+  expiry: string;
   expires_in: number;
   scope: string;
-  token_type: 'Bearer';
+}
+
+export interface KickAuthConfig {
+  clientId: string;
+  clientSecret: string;
+  redirectUri: string;
+  scopes?: string[];
+}
+
+export type TokenHintType = 'access_token' | 'refresh_token';
+
+export interface AuthorizeParams {
+  state: string;
+  codeChallenge: string;
+  codeChallengeMethod: 'S256';
+  scopes: string[];
 }
