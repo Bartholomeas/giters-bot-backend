@@ -29,8 +29,6 @@ export interface KickAuthTokenResponse {
   // token_type: 'Bearer';
 }
 
-
-
 export interface TokenResponse {
   access_token: string;
   token_type: string;

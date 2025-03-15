@@ -1,18 +1,13 @@
 import * as crypto from 'crypto';
 import { ConfigService } from '@nestjs/config';
-import {
-  KICK_AUTH_URL,
-  KICK_SCOPES,
-  KICK_TOKEN_URL,
-} from './kick-auth.constants';
+import axios, { AxiosError } from 'axios';
 import { BadRequestException, Injectable } from '@nestjs/common';
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import { KICK_AUTH_URL, KICK_SCOPES, KICK_TOKEN_URL } from '../kick.constants';
 import {
   KickAuthSearchParams,
-  KickAuthTokenResponse,
   TokenHintType,
   TokenResponse,
-} from './types/kick-auth.types';
+} from './kick-client.types';
 
 @Injectable()
 export class KickClient {
@@ -32,17 +27,17 @@ export class KickClient {
     this.kickClientSecret = this.configService.getOrThrow('KICK_CLIENT_SECRET');
   }
 
-  generateCodeVerifier(length: number = 128): string {
-    const buffer = crypto.randomBytes(length);
-    return buffer
-      .toString('base64url')
-      .replace(/\+/g, '-')
-      .replace(/\//g, '_')
-      .replace(/=/g, '')
-      .slice(0, length);
-
+  generateCodeVerifier(length: number = 32): string {
     // const buffer = crypto.randomBytes(length);
-    // return buffer.toString('base64url');
+    // return buffer
+    //   .toString('base64url')
+    //   .replace(/\+/g, '-')
+    //   .replace(/\//g, '_')
+    //   .replace(/=/g, '')
+    //   .slice(0, length);
+
+    const buffer = crypto.randomBytes(length);
+    return buffer.toString('base64url');
   }
 
   generateCodeChallenge(verifier: string): string {

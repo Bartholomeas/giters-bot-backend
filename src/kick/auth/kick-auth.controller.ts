@@ -5,22 +5,21 @@ import {
   Get,
   HttpCode,
   HttpStatus,
-  Query,
   Redirect,
   Req,
   Res,
 } from '@nestjs/common';
-import { KickAuthService } from './kick-auth.service';
 import { Request, Response } from 'express';
 import { ConfigService } from '@nestjs/config';
+import { KickAuthService } from './services/kick-auth.service';
 
 @Controller()
 export class KickAuthController {
   private readonly nodeEnv: string;
 
   constructor(
-    private readonly kickAuthService: KickAuthService,
     private readonly configService: ConfigService,
+    private readonly kickAuthService: KickAuthService,
   ) {
     this.nodeEnv = this.configService.get('NODE_ENV') ?? 'development';
   }
@@ -32,13 +31,9 @@ export class KickAuthController {
 
   @Get('/auth/login')
   @Redirect()
-  login(@Req() req: Request) {
-    const { url, state, codeVerifier } = this.kickAuthService.login();
-    console.log('UEREL:: ', url, { state, codeVerifier });
-
-    // req.session.state = state;
-    // req.session.codeVerifier = codeVerifier;
-
+  login() {
+    const { url } = this.kickAuthService.login();
+    console.log('Auth url: ', { url });
     return { url, statusCode: 301 };
   }
 
@@ -50,11 +45,7 @@ export class KickAuthController {
       await this.kickAuthService.getAccessToken({
         code: code as string,
         state: state as string,
-        // codeVerifier: req.session.codeVerifier,
       });
-
-    // req.session.accessToken = accessToken;
-    // req.session.refreshToken = refreshToken;
 
     res.cookie('kick_access_token', accessToken, {
       httpOnly: true,
@@ -72,24 +63,6 @@ export class KickAuthController {
     console.log({ accessToken });
     return { url: '/dashboard', statusCode: 301 };
   }
-
-  // @Get('/oauth/kick/callback')
-  // @Redirect()
-  // async authCallback2(@Req() req: Request) {
-  //   const { code, state } = req.query;
-  //   const { accessToken, refreshToken } =
-  //     await this.kickAuthService.handleAuthCallback({
-  //       code: code as string,
-  //       state: state as string,
-  //       codeVerifier: req.session.codeVerifier,
-  //     });
-
-  //   req.session.accessToken = accessToken;
-  //   req.session.refreshToken = refreshToken;
-  //   console.log('FFF:: ', accessToken);
-
-  //   return { url: '/dashboard', statusCode: 301 };
-  // }
 
   @Delete('/auth/logout')
   @HttpCode(HttpStatus.NO_CONTENT)

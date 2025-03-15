@@ -11,6 +11,7 @@ export default tseslint.config(
   eslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
   eslintPluginPrettierRecommended,
+  
   {
     languageOptions: {
       globals: {
@@ -27,6 +28,29 @@ export default tseslint.config(
   },
   {
     rules: {
+      'import/order': [
+        'warn',
+        {
+          groups: [
+            'builtin',
+            'external',
+            'internal',
+            ['parent', 'sibling'],
+            'index',
+            'object',
+            'type',
+          ],
+          pathGroups: [
+            { pattern: '@nestjs/**', group: 'external', position: 'before' },
+            { pattern: '@common/**', group: 'internal', position: 'after' },
+            { pattern: '@events/**', group: 'internal', position: 'after' },
+            { pattern: '@/**', group: 'internal', position: 'after' },
+          ],
+          'newlines-between': 'always',
+          alphabetize: { order: 'asc', caseInsensitive: true },
+          pathGroupsExcludedImportTypes: ['builtin'],
+        },
+      ],
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-floating-promises': 'warn',
       '@typescript-eslint/no-unsafe-argument': 'warn',

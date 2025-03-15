@@ -1,9 +1,10 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { HandleAuthDto } from './dto/handle-auth.dto';
-import { TokenHintType, TokenResponse } from './types/kick-auth.types';
+
 import { AxiosError } from 'axios';
-import { KickClient } from './kick.client';
+import { KickClient } from 'src/kick/kick-client/kick.client';
+import { HandleAuthDto } from '../dto/handle-auth.dto';
+import { TokenHintType } from 'src/kick/kick-client/kick-client.types';
 
 @Injectable()
 export class KickAuthService {
